@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import modelo.BancoContato;
 import modelo.Contato;
 import java.io.IOException;
@@ -15,19 +16,23 @@ public class listarContatosServlet extends HttpServlet {
       
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Você pode realizar algumas ações do doGet aqui, se necessário
-
-        // Em seguida, chame o método doPost
         doPost(request, response);
     }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
+		
 		BancoContato bancoContato = BancoContato.getInstancia();
 
-        // Obtém a lista de contatos do banco de dados
+        
         ArrayList<Contato> contatos = bancoContato.listarContatos();
 
-        // Define o tipo de conteúdo da resposta como HTML
+        
         response.setContentType("text/html");
 
         // Escreve a lista de contatos na resposta HTML

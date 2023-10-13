@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import modelo.BancoContato;
 
 import java.io.IOException;
@@ -15,6 +16,14 @@ public class excluirUsuarioServlet extends HttpServlet {
        
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// Verificar a sessão
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
+		
 		String nomeContato = request.getParameter("nomeContato");
 
         
